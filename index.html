@@ -26,8 +26,9 @@
             .chart-container { height: 400px; }
         }
         .tab-btn.active {
-            background-color:#b18af1;
+            background-color: #b18af1;
             color: white;
+            border-color: #0284c7;
         }
         .tab-btn { transition: all 0.3s ease; }
         .animate-fade-in {
@@ -41,155 +42,271 @@
 </head>
 <body class="antialiased">
 
-<nav class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 flex h-16 items-center">
-        <span class="text-2xl font-black text-[#b18af1]">Feedback</span>
-        <span class="text-sm ml-2 text-slate-500 border-l pl-2">en Dosis Reales</span>
-    </div>
-</nav>
-
-<header class="bg-[#b18af1] text-white py-20 text-center">
-    <h1 class="text-5xl font-extrabold mb-6">Feedback entre generaciones</h1>
-    <p class="text-xl text-slate-200 max-w-3xl mx-auto">
-        Adaptar el mensaje para transformar las diferencias en oportunidades de aprendizaje.
-    </p>
-</header>
-
-<main class="max-w-7xl mx-auto py-12 space-y-24 px-6">
-
-<section class="text-center max-w-3xl mx-auto">
-    <p class="text-lg text-slate-600 mb-6">
-        En Frávega convivimos personas con distintas experiencias, recorridos y formas de trabajar.
-        Cuando el feedback se adapta a cada persona, las conversaciones se vuelven más claras,
-        más valiosas y se transforman en una oportunidad de aprendizaje para todo el equipo.
-    </p>
-
-    <div class="bg-orange-50 border p-4 rounded-xl inline-flex items-center">
-        <span class="text-3xl mr-3">🎯</span>
-        <p class="text-sm text-orange-800">
-            La diversidad es una fortaleza: el desafío es saber cómo adaptarnos para que el mensaje llegue.
-        </p>
-    </div>
-</section>
-
-<section>
-    <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold mb-4">Explorador de perfiles</h2>
-        <p class="text-slate-600">Cada generación tiene una forma distinta de recibir feedback</p>
-    </div>
-
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div class="flex flex-wrap border-b" id="tab-container">
-            <button class="tab-btn active flex-1 py-4" data-target="gen-z">Gen Z</button>
-            <button class="tab-btn flex-1 py-4" data-target="millennials">Millennials</button>
-            <button class="tab-btn flex-1 py-4" data-target="gen-x">Gen X</button>
-            <button class="tab-btn flex-1 py-4" data-target="boomers">Boomers</button>
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl font-black text-[#b18af1] tracking-tighter">Feedback</span>
+                    <span class="text-sm font-medium text-slate-500 border-l border-slate-300 pl-2">en Dosis Reales</span>
+                </div>
+            </div>
         </div>
-        <div id="content-container" class="p-8"></div>
-    </div>
-</section>
+    </nav>
 
-<section class="bg-white rounded-2xl p-10">
-    <h2 class="text-3xl font-bold mb-6">Claves para adaptar el feedback</h2>
-
-    <ul class="space-y-4 text-slate-600">
-        <li>👉 No todos necesitan lo mismo: algunos valoran la claridad, otros la frecuencia.</li>
-        <li>👉 El contexto importa tanto como el mensaje.</li>
-        <li>👉 Adaptar no es cambiar lo que decís, sino cómo lo decís.</li>
-    </ul>
-</section>
-
-<section class="bg-slate-50 p-10 rounded-2xl">
-    <h2 class="text-3xl font-bold mb-6 text-center">Impacto del recorrido</h2>
-
-    <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white p-6 rounded-xl border-l-4 border-[#0284c7]">
-            <h3 class="font-bold">Trayectoria</h3>
-            <p class="text-sm mt-2">
-                Valora reconocimiento a su experiencia y autonomía.
-            </p>
+    <header class="bg-[#b18af1] text-white py-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">Feedback entre generaciones</h1>
+            <p class="text-xl md:text-2xl font-light text-slate-300 max-w-3xl mx-auto">Adaptar el mensaje para transformar las diferencias en oportunidades de aprendizaje.</p>
         </div>
+    </header>
 
-        <div class="bg-white p-6 rounded-xl border-l-4 border-[#ea580c]">
-            <h3 class="font-bold">Ingresante</h3>
-            <p class="text-sm mt-2">
-                Necesita contexto, claridad y acompañamiento.
-            </p>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+
+        <section id="introduccion">
+            <div class="max-w-3xl mx-auto text-center">
+                <p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
+                    En Frávega convivimos personas con distintas experiencias y formas de trabajar. Esta aplicación interactiva permite explorar cómo dar y recibir feedback de manera efectiva según el perfil generacional y el recorrido en la compañía.
+                </p>
+                <div class="inline-flex items-center justify-center p-4 bg-orange-50 rounded-xl border border-orange-100">
+                    <span class="text-3xl mr-4">🎯</span>
+                    <p class="text-left text-sm font-medium text-orange-800">El objetivo es brindar herramientas para preparar intercambios de feedback donde el mensaje llegue y genere valor real.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="explorador-generacional">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Explorador de Perfiles</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">Selecciona una generación para descubrir cómo adaptar tus conversaciones de feedback.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+                <div class="flex flex-wrap border-b border-slate-200" id="tab-container">
+                    <button class="tab-btn active flex-1 py-4 px-6 text-sm font-semibold" data-target="gen-z">Gen Z</button>
+                    <button class="tab-btn flex-1 py-4 px-6 text-sm font-semibold" data-target="millennials">Millennials</button>
+                    <button class="tab-btn flex-1 py-4 px-6 text-sm font-semibold" data-target="gen-x">Generación X</button>
+                    <button class="tab-btn flex-1 py-4 px-6 text-sm font-semibold" data-target="boomers">Baby Boomers</button>
+                </div>
+
+                <div class="p-8 md:p-12" id="content-container"></div>
+            </div>
+        </section>
+
+        <section id="analisis-valores" class="bg-white rounded-2xl shadow-md p-8 md:p-12 border border-slate-100">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-800 mb-6">Mapeo de Valores Laborales</h2>
+                    <p class="text-slate-600 mb-6 leading-relaxed">Visualización comparativa de las prioridades según cada generación. Este mapa ayuda a entender qué aspectos resuenan más al momento de liderar.</p>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 bg-slate-50 rounded-lg">
+                            <span class="text-xl mr-3">💻</span>
+                            <span class="text-sm text-slate-700"><strong>Fluidez Digital:</strong> Dominio de herramientas colaborativas.</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-slate-50 rounded-lg">
+                            <span class="text-xl mr-3">⚡</span>
+                            <span class="text-sm text-slate-700"><strong>Inmediatez:</strong> Expectativa de respuestas en tiempo real.</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-slate-50 rounded-lg">
+                            <span class="text-xl mr-3">🏗️</span>
+                            <span class="text-sm text-slate-700"><strong>Estructura:</strong> Valoración de procesos y jerarquía.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="impacto-recorrido">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Impacto del Recorrido</h2>
+                <p class="text-slate-600 max-w-3xl mx-auto">La antigüedad define necesidades específicas que el feedback debe contemplar, independientemente de la edad.</p>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-[#0284c7]">
+                            <h3 class="font-bold text-slate-800">El Experto (Trayectoria)</h3>
+                            <p class="text-sm text-slate-600 mt-2">Requiere reconocimiento a su visión y autonomía para proponer soluciones.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-[#ea580c]">
+                            <h3 class="font-bold text-slate-800">El Ingresante (Nuevas Miradas)</h3>
+                            <p class="text-sm text-slate-600 mt-2">Necesita contexto operativo claro y validación frecuente en su etapa inicial.</p>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7 chart-container">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#b18af1] text-slate-300 py-16 text-center border-t-4 border-[#0284c7]">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-2xl font-bold text-white mb-6">El poder de la conversación</h2>
+            <p class="text-lg mb-8">Al entender qué necesita cada persona para crecer, dejamos de hablar de generaciones y empezamos a hablar de <strong>mejores conversaciones</strong>.</p>
+            <p class="text-sm text-slate-400">Desarrollado para el equipo de Frávega</p>
         </div>
-    </div>
-</section>
+    </footer>
 
-</main>
+    <script>
+        const formatLabel = (label) => {
+            if (label.length <= 16) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + words[i].length + 1 <= 16) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        };
 
-<footer class="bg-[#b18af1] text-white py-16 text-center">
-    <h2 class="text-2xl font-bold mb-4">El poder de la conversación</h2>
-    <p class="max-w-2xl mx-auto">
-        Cuando entendemos qué necesita cada persona para recibir feedback,
-        dejamos de hablar de generaciones y empezamos a hablar de mejores conversaciones.
-    </p>
-</footer>
+        const tooltipConfig = {
+            callbacks: {
+                title: function(items) {
+                    const item = items[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    return Array.isArray(label) ? label.join(' ') : label;
+                }
+            }
+        };
 
-<script>
-const genData = {
-    "gen-z": {
-        title: "Generación Z 📱",
-        content: `
-        Nativos digitales. Valoran la inmediatez, la transparencia y el aprendizaje continuo.<br><br>
-        <b>Qué valoran:</b> Feedback rápido, claro y específico.<br>
-        <b>Cómo darlo:</b> Cerca del momento, con ejemplos concretos e involucrándolos en la solución.
-        `
-    },
-    "millennials": {
-        title: "Millennials 🚀",
-        content: `
-        Buscan propósito, crecimiento y desarrollo profesional.<br><br>
-        <b>Qué valoran:</b> Feedback frecuente.<br>
-        <b>Cómo darlo:</b> Conversaciones continuas enfocadas en su desarrollo.
-        `
-    },
-    "gen-x": {
-        title: "Generación X 🎯",
-        content: `
-        Autónomos, prácticos y orientados a resultados.<br><br>
-        <b>Qué valoran:</b> Claridad y honestidad.<br>
-        <b>Cómo darlo:</b> Directo, concreto y dejando espacio para resolver.
-        `
-    },
-    "boomers": {
-        title: "Baby Boomers 🤝",
-        content: `
-        Valoran la experiencia, el compromiso y la trayectoria.<br><br>
-        <b>Qué valoran:</b> Reconocimiento.<br>
-        <b>Cómo darlo:</b> Con respeto, contexto y claridad.
-        `
-    }
-};
+        const genData = {
+            'gen-z': {
+                title: 'Generación Z',
+                icon: '📱',
+                color: '#7e22ce',
+                description: 'Nativos digitales. Valoran la transparencia y el impacto social inmediato en sus tareas.',
+                traits: ['Inmediatez', 'Transparencia', 'Aprendizaje'],
+                feedbackValued: 'Respuestas rápidas y específicas. Prefieren saber el "qué mejorar" en tiempo real.',
+                feedbackHow: 'Uso de canales ágiles, ejemplos concretos y co-creación de soluciones.'
+            },
+            'millennials': {
+                title: 'Millennials',
+                icon: '🚀',
+                color: '#be185d',
+                description: 'Crecieron con la tecnología. Buscan propósito y desarrollo constante en sus roles.',
+                traits: ['Propósito', 'Flexibilidad', 'Desarrollo'],
+                feedbackValued: 'Instancias frecuentes que les ayuden a visualizar su crecimiento profesional.',
+                feedbackHow: 'Conversaciones uno a uno con foco en el desarrollo de carrera y metas claras.'
+            },
+            'gen-x': {
+                title: 'Generación X',
+                icon: '🎯',
+                color: '#ea580c',
+                description: 'Adaptables y autónomos. Valoran la eficiencia y el equilibrio entre vida y trabajo.',
+                traits: ['Autonomía', 'Eficiencia', 'Pragmatismo'],
+                feedbackValued: 'Honestidad directa y respeto por sus tiempos y métodos de trabajo.',
+                feedbackHow: 'Ir directo al punto, destacar resultados y dar espacio para la resolución independiente.'
+            },
+            'boomers': {
+                title: 'Baby Boomers',
+                icon: '🤝',
+                color: '#0d9488',
+                description: 'Valoran la experiencia, la estabilidad y la comunicación interpersonal cara a cara.',
+                traits: ['Experiencia', 'Lealtad', 'Estructura'],
+                feedbackValued: 'Reconocimiento explícito a su trayectoria y respeto por el aporte histórico.',
+                feedbackHow: 'Conversaciones presenciales, validando primero sus logros antes de plantear mejoras.'
+            }
+        };
 
-const contentContainer = document.getElementById("content-container");
-const tabs = document.querySelectorAll(".tab-btn");
+        const contentContainer = document.getElementById('content-container');
+        const tabBtns = document.querySelectorAll('.tab-btn');
 
-function render(id){
-    const data = genData[id];
-    contentContainer.innerHTML = `
-        <div class="animate-fade-in">
-            <h3 class="text-2xl font-bold mb-4">${data.title}</h3>
-            <p class="text-slate-600">${data.content}</p>
-        </div>
-    `;
+        function renderGenContent(genId) {
+            const data = genData[genId];
+            const traitsHtml = data.traits.map(t => `<span class="inline-block bg-slate-100 text-slate-700 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2 border border-slate-200">${t}</span>`).join('');
 
-    tabs.forEach(t=>{
-        t.classList.remove("active");
-    });
+            contentContainer.innerHTML = `
+                <div class="flex flex-col md:flex-row gap-8 animate-fade-in">
+                    <div class="md:w-1/3">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background-color: ${data.color}20; color: ${data.color};">${data.icon}</div>
+                            <h3 class="text-2xl font-bold text-slate-800">${data.title}</h3>
+                        </div>
+                        <p class="text-slate-600 mb-6 text-sm">${data.description}</p>
+                        <div class="mb-6">
+                            <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">ADN Laboral</h4>
+                            <div>${traitsHtml}</div>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3 flex flex-col gap-4">
+                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-100 border-l-4" style="border-left-color: ${data.color}">
+                            <h4 class="font-bold text-slate-800 mb-2">Qué esperan del feedback</h4>
+                            <p class="text-sm text-slate-700">${data.feedbackValued}</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-100 border-l-4" style="border-left-color: ${data.color}">
+                            <h4 class="font-bold text-slate-800 mb-2">Sugerencia de abordaje</h4>
+                            <p class="text-sm text-slate-700">${data.feedbackHow}</p>
+                        </div>
+                    </div>
+                </div>`;
+            
+            tabBtns.forEach(btn => {
+                const isActive = btn.dataset.target === genId;
+                btn.classList.toggle('active', isActive);
+                if (isActive) {
+                    btn.style.backgroundColor = data.color;
+                    btn.style.borderColor = data.color;
+                    btn.style.color = 'white';
+                } else {
+                    btn.style.backgroundColor = 'transparent';
+                    btn.style.borderColor = 'transparent';
+                    btn.style.color = '#475569';
+                }
+            });
+        }
 
-    document.querySelector(`[data-target="${id}"]`).classList.add("active");
-}
+        tabBtns.forEach(btn => btn.addEventListener('click', () => renderGenContent(btn.dataset.target)));
+        
+        window.onload = () => {
+            renderGenContent('gen-z');
+            
+            new Chart(document.getElementById('radarChart').getContext('2d'), {
+                type: 'radar',
+                data: {
+                    labels: ['Fluidez Digital', 'Valor Estructura', 'Búsqueda Propósito', 'Inmediatez', 'Autonomía'].map(formatLabel),
+                    datasets: [
+                        { label: 'Gen Z', data: [95, 30, 85, 95, 60], backgroundColor: 'rgba(126, 34, 206, 0.1)', borderColor: '#7e22ce', borderWidth: 2 },
+                        { label: 'Gen X', data: [65, 75, 60, 45, 95], backgroundColor: 'rgba(234, 88, 12, 0.1)', borderColor: '#ea580c', borderWidth: 2 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { tooltip: tooltipConfig, legend: { position: 'bottom', labels: { usePointStyle: true, font: { size: 10 } } } },
+                    scales: { r: { grid: { color: '#f1f5f9' }, ticks: { display: false }, pointLabels: { font: { size: 10, weight: '600' } } } }
+                }
+            });
 
-tabs.forEach(t=>{
-    t.addEventListener("click", ()=>render(t.dataset.target));
-});
-
-render("gen-z");
-</script>
-
+            new Chart(document.getElementById('barChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Necesidad de Contexto', 'Espacio para Preguntar', 'Grado de Autonomía', 'Aporte Estratégico'].map(formatLabel),
+                    datasets: [
+                        { label: 'Ingresante', data: [95, 90, 40, 45], backgroundColor: '#ea580c', borderRadius: 4 },
+                        { label: 'Experto', data: [25, 35, 95, 95], backgroundColor: '#0284c7', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { tooltip: tooltipConfig, legend: { position: 'top', labels: { usePointStyle: true, font: { size: 10 } } } },
+                    scales: { x: { display: false, max: 100 }, y: { grid: { display: false }, ticks: { font: { size: 11 } } } }
+                }
+            });
+        };
+    </script>
 </body>
 </html>
