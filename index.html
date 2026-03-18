@@ -1,198 +1,194 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feedback entre Generaciones</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #fdfbf7;
-    color: #1e293b;
-}
-
-.tab-btn.active {
-    background-color:#b18af1;
-    color: white;
-}
-
-.tab-btn {
-    transition: all 0.3s ease;
-}
-
-.chart-container {
-    max-width: 700px;
-    margin: 40px auto;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback entre Generaciones - Frávega</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfbf7;
+            color: #1e293b;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 400px; }
+        }
+        .tab-btn.active {
+            background-color:#b18af1;
+            color: white;
+        }
+        .tab-btn { transition: all 0.3s ease; }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
+<body class="antialiased">
 
-<body>
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 flex h-16 items-center">
+        <span class="text-2xl font-black text-[#b18af1]">Feedback</span>
+        <span class="text-sm ml-2 text-slate-500 border-l pl-2">en Dosis Reales</span>
+    </div>
+</nav>
 
-<!-- HEADER -->
-<header class="bg-[#b18af1] text-white py-16 text-center px-6">
-    <h1 class="text-4xl font-bold">Feedback entre generaciones</h1>
-    <p class="mt-4 max-w-2xl mx-auto">
-        Una conversación que hace crecer a los equipos
+<header class="bg-[#b18af1] text-white py-20 text-center">
+    <h1 class="text-5xl font-extrabold mb-6">Feedback entre generaciones</h1>
+    <p class="text-xl text-slate-200 max-w-3xl mx-auto">
+        Adaptar el mensaje para transformar las diferencias en oportunidades de aprendizaje.
     </p>
 </header>
 
-<!-- INTRO -->
-<section class="max-w-4xl mx-auto mt-10 px-6 text-lg leading-relaxed">
-    <p>
+<main class="max-w-7xl mx-auto py-12 space-y-24 px-6">
+
+<section class="text-center max-w-3xl mx-auto">
+    <p class="text-lg text-slate-600 mb-6">
         En Frávega convivimos personas con distintas experiencias, recorridos y formas de trabajar.
         Cuando el feedback se adapta a cada persona, las conversaciones se vuelven más claras,
         más valiosas y se transforman en una oportunidad de aprendizaje para todo el equipo.
     </p>
 
-    <p class="mt-4 font-semibold">Esa diversidad es una gran fortaleza.</p>
-
-    <p class="mt-4">
-        Conozcamos un poco más las distintas generaciones y sus características principales:
-    </p>
+    <div class="bg-orange-50 border p-4 rounded-xl inline-flex items-center">
+        <span class="text-3xl mr-3">🎯</span>
+        <p class="text-sm text-orange-800">
+            La diversidad es una fortaleza: el desafío es saber cómo adaptarnos para que el mensaje llegue.
+        </p>
+    </div>
 </section>
 
-<!-- TABS GENERACIONES -->
-<section class="max-w-5xl mx-auto mt-10 bg-white rounded-xl shadow">
+<section>
+    <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold mb-4">Explorador de perfiles</h2>
+        <p class="text-slate-600">Cada generación tiene una forma distinta de recibir feedback</p>
+    </div>
 
-<div class="flex flex-wrap text-sm md:text-base">
-    <button class="tab-btn active flex-1 p-4" onclick="render('gen-z', this)">Gen Z</button>
-    <button class="tab-btn flex-1 p-4" onclick="render('millennials', this)">Millennials</button>
-    <button class="tab-btn flex-1 p-4" onclick="render('gen-x', this)">Gen X</button>
-    <button class="tab-btn flex-1 p-4" onclick="render('boomers', this)">Boomers</button>
-</div>
-
-<div id="content" class="p-6 leading-relaxed"></div>
-
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="flex flex-wrap border-b" id="tab-container">
+            <button class="tab-btn active flex-1 py-4" data-target="gen-z">Gen Z</button>
+            <button class="tab-btn flex-1 py-4" data-target="millennials">Millennials</button>
+            <button class="tab-btn flex-1 py-4" data-target="gen-x">Gen X</button>
+            <button class="tab-btn flex-1 py-4" data-target="boomers">Boomers</button>
+        </div>
+        <div id="content-container" class="p-8"></div>
+    </div>
 </section>
 
-<!-- TEXTO INTERMEDIO -->
-<section class="max-w-4xl mx-auto mt-10 px-6 leading-relaxed">
-    <p>
-        En los equipos compartimos el trabajo personas de distintas generaciones y cada uno tiene expectativas diferentes sobre cómo interactuar, comunicarse y recibir feedback.
-    </p>
+<section class="bg-white rounded-2xl p-10">
+    <h2 class="text-3xl font-bold mb-6">Claves para adaptar el feedback</h2>
 
-    <p class="mt-4">
-        Algunos valoran más la formalidad, otros las conversaciones más frecuentes: todas las perspectivas son válidas y es en esta diversidad que aprendemos y crecemos como equipo.
-    </p>
-
-    <p class="mt-4 font-semibold">
-        La clave está en cómo nos adaptamos para dar y recibir feedback.
-    </p>
+    <ul class="space-y-4 text-slate-600">
+        <li>👉 No todos necesitan lo mismo: algunos valoran la claridad, otros la frecuencia.</li>
+        <li>👉 El contexto importa tanto como el mensaje.</li>
+        <li>👉 Adaptar no es cambiar lo que decís, sino cómo lo decís.</li>
+    </ul>
 </section>
 
-<!-- TABLA -->
-<section class="max-w-6xl mx-auto mt-10 px-6 overflow-auto">
-<table class="w-full border border-gray-200 text-sm">
-<thead class="bg-[#b18af1] text-white">
-<tr>
-<th class="p-3 text-left">Generación</th>
-<th class="p-3 text-left">Qué valoran</th>
-<th class="p-3 text-left">Cómo dar feedback</th>
-</tr>
-</thead>
-<tbody>
-<tr class="border-t">
-<td class="p-3">Baby Boomers</td>
-<td class="p-3">Reconocimiento a su experiencia y trayectoria</td>
-<td class="p-3">Con respeto, contexto y claridad</td>
-</tr>
-<tr class="border-t">
-<td class="p-3">Generación X</td>
-<td class="p-3">Honestidad y claridad</td>
-<td class="p-3">Directo, concreto y enfocado en resultados</td>
-</tr>
-<tr class="border-t">
-<td class="p-3">Millennials</td>
-<td class="p-3">Feedback frecuente y desarrollo</td>
-<td class="p-3">Conversaciones continuas con foco en crecimiento</td>
-</tr>
-<tr class="border-t">
-<td class="p-3">Generación Z</td>
-<td class="p-3">Feedback rápido y específico</td>
-<td class="p-3">Cercano a la situación, con ejemplos concretos</td>
-</tr>
-</tbody>
-</table>
+<section class="bg-slate-50 p-10 rounded-2xl">
+    <h2 class="text-3xl font-bold mb-6 text-center">Impacto del recorrido</h2>
+
+    <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-xl border-l-4 border-[#0284c7]">
+            <h3 class="font-bold">Trayectoria</h3>
+            <p class="text-sm mt-2">
+                Valora reconocimiento a su experiencia y autonomía.
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl border-l-4 border-[#ea580c]">
+            <h3 class="font-bold">Ingresante</h3>
+            <p class="text-sm mt-2">
+                Necesita contexto, claridad y acompañamiento.
+            </p>
+        </div>
+    </div>
 </section>
 
-<!-- TEXTO FINAL -->
-<section class="max-w-4xl mx-auto mt-10 px-6 leading-relaxed">
-    <p>
-        La clave está en la empatía: generar espacios de diálogo abierto permite compartir perspectivas y aprender como equipo.
-    </p>
+</main>
 
-    <p class="mt-4">
-        Además, no solo influye la generación, sino también el recorrido dentro de la organización.
+<footer class="bg-[#b18af1] text-white py-16 text-center">
+    <h2 class="text-2xl font-bold mb-4">El poder de la conversación</h2>
+    <p class="max-w-2xl mx-auto">
+        Cuando entendemos qué necesita cada persona para recibir feedback,
+        dejamos de hablar de generaciones y empezamos a hablar de mejores conversaciones.
     </p>
-
-    <p class="mt-4">
-        Cuando combinamos experiencia con nuevas miradas, logramos mejores resultados y conversaciones más ricas.
-    </p>
-
-    <p class="mt-4 font-semibold">
-        Cuando entendemos qué necesita cada persona, dejamos de hablar de generaciones y empezamos a hablar de mejores conversaciones.
-    </p>
-</section>
-
-<!-- GRÁFICO -->
-<div class="chart-container">
-<canvas id="chart"></canvas>
-</div>
+</footer>
 
 <script>
-const data = {
-"gen-z": `
-<b>Generación Z</b><br><br>
-Son nativos digitales y crecieron en un mundo hiperconectado.
-Valoran la inmediatez, la transparencia y el aprendizaje continuo.
-`,
-"millennials": `
-<b>Millennials</b><br><br>
-Valoran la autenticidad, el propósito y el desarrollo profesional.
-Buscan feedback frecuente que los ayude a crecer.
-`,
-"gen-x": `
-<b>Generación X</b><br><br>
-Prefieren la claridad, la autonomía y la comunicación directa.
-Son prácticos y orientados a resultados.
-`,
-"boomers": `
-<b>Baby Boomers</b><br><br>
-Valoran la experiencia, el compromiso y el reconocimiento.
-Prefieren comunicaciones formales y claras.
-`
+const genData = {
+    "gen-z": {
+        title: "Generación Z 📱",
+        content: `
+        Nativos digitales. Valoran la inmediatez, la transparencia y el aprendizaje continuo.<br><br>
+        <b>Qué valoran:</b> Feedback rápido, claro y específico.<br>
+        <b>Cómo darlo:</b> Cerca del momento, con ejemplos concretos e involucrándolos en la solución.
+        `
+    },
+    "millennials": {
+        title: "Millennials 🚀",
+        content: `
+        Buscan propósito, crecimiento y desarrollo profesional.<br><br>
+        <b>Qué valoran:</b> Feedback frecuente.<br>
+        <b>Cómo darlo:</b> Conversaciones continuas enfocadas en su desarrollo.
+        `
+    },
+    "gen-x": {
+        title: "Generación X 🎯",
+        content: `
+        Autónomos, prácticos y orientados a resultados.<br><br>
+        <b>Qué valoran:</b> Claridad y honestidad.<br>
+        <b>Cómo darlo:</b> Directo, concreto y dejando espacio para resolver.
+        `
+    },
+    "boomers": {
+        title: "Baby Boomers 🤝",
+        content: `
+        Valoran la experiencia, el compromiso y la trayectoria.<br><br>
+        <b>Qué valoran:</b> Reconocimiento.<br>
+        <b>Cómo darlo:</b> Con respeto, contexto y claridad.
+        `
+    }
 };
 
-function render(key, el){
-document.getElementById("content").innerHTML = data[key];
+const contentContainer = document.getElementById("content-container");
+const tabs = document.querySelectorAll(".tab-btn");
 
-document.querySelectorAll(".tab-btn").forEach(btn=>{
-btn.classList.remove("active");
+function render(id){
+    const data = genData[id];
+    contentContainer.innerHTML = `
+        <div class="animate-fade-in">
+            <h3 class="text-2xl font-bold mb-4">${data.title}</h3>
+            <p class="text-slate-600">${data.content}</p>
+        </div>
+    `;
+
+    tabs.forEach(t=>{
+        t.classList.remove("active");
+    });
+
+    document.querySelector(`[data-target="${id}"]`).classList.add("active");
+}
+
+tabs.forEach(t=>{
+    t.addEventListener("click", ()=>render(t.dataset.target));
 });
-
-if(el){
-el.classList.add("active");
-}
-}
 
 render("gen-z");
-
-new Chart(document.getElementById("chart"), {
-type: "bar",
-data: {
-labels: ["Boomers","Gen X","Millennials","Gen Z"],
-datasets: [{
-data: [70,75,85,90]
-}]
-}
-});
 </script>
 
 </body>
