@@ -3,310 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedback entre Generaciones - Frávega</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Gestión de Proyecto: Capacitación Motos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fdfbf7;
-            color: #1e293b;
+        :root {
+            --dark-violet: #4B2E83;
+            --med-violet: #5E3A99;
+            --fuchsia: #C73C8C;
+            --strong-pink: #D85B73;
+            --soft-pink: #E58A95;
+            --strong-turquoise: #2FA4A9;
+            --med-turquoise: #66B2B2;
+            --soft-turquoise: #7BC0B8;
+            --white: #FFFFFF;
+            --light-grey: #EDEDED;
+            --black: #000000;
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 400px;
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--light-grey); color: var(--black); line-height: 1.6; }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: var(--white);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid #ddd;
         }
-        @media (min-width: 768px) {
-            .chart-container { height: 400px; }
+
+        /* HEADER */
+        header {
+            background-color: var(--dark-violet);
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        .tab-btn.active {
-            background-color: #b18af1;
+
+        .brand-box { display: flex; align-items: center; gap: 20px; }
+        .logo { background: white; color: var(--dark-violet); padding: 10px 24px; font-weight: 900; font-size: 22px; letter-spacing: -1px; border-radius: 6px; }
+        .divider { width: 1px; height: 40px; background: rgba(255,255,255,0.2); }
+        .header-text h1 { color: white; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        .header-text p { color: var(--soft-turquoise); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; margin-top: 2px; }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mesa-tag {
+            background: var(--med-violet);
+            padding: 12px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
             color: white;
-            border-color: #0284c7;
+            font-size: 10px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
         }
-        .tab-btn { transition: all 0.3s ease; }
-        .animate-fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
+
+        /* METRICS */
+        .metrics-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            border-bottom: 1px solid #eee; 
+            background: white; 
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .metric-card { padding: 25px; display: flex; flex-direction: column; align-items: center; border-right: 1px solid #eee; transition: all 0.3s; }
+        .metric-card:last-child { border-right: none; }
+        .metric-label { font-size: 9px; font-weight: 900; color: #bbb; margin-bottom: 10px; letter-spacing: 1.5px; text-align: center; }
+        .progress-circle { position: relative; width: 70px; height: 70px; }
+        .progress-circle svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+        .progress-circle circle { fill: none; stroke-width: 6; }
+        .progress-circle .bg { stroke: #f2f2f2; }
+        .progress-circle .val { stroke-linecap: round; transition: stroke-dashoffset 1s ease-out; }
+        .progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 12px; font-weight: 800; }
+
+        /* TABS */
+        .tabs { display: flex; border-bottom: 1px solid #eee; padding: 0 40px; background: white; }
+        .tab-btn { padding: 20px 30px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; border: none; background: none; cursor: pointer; color: #999; position: relative; transition: all 0.3s; }
+        .tab-btn.active { color: var(--fuchsia); }
+        .tab-btn.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 4px; background: var(--fuchsia); }
+
+        /* CONTENT */
+        .content { padding: 30px; min-height: 500px; }
+        .eje-section { border: 1px solid #f0f0f0; border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .eje-header { width: 100%; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border: none; text-align: left; }
+        .eje-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
+        .eje-title { flex: 1; margin-left: 20px; }
+        .eje-title h3 { font-size: 13px; font-weight: 800; letter-spacing: 0.5px; }
+        .eje-title p { font-size: 9px; opacity: 0.8; font-weight: 600; margin-top: 2px; }
+
+        .eje-body { display: none; background: white; }
+        .eje-body.active { display: block; }
+
+        .task-grid-header { 
+            background: #fafafa; 
+            padding: 12px 30px; 
+            font-size: 9px; 
+            font-weight: 800; 
+            color: #aaa; 
+            display: grid; 
+            grid-template-columns: 40px 1.5fr 100px 1.2fr 120px; 
+            gap: 20px;
+            text-transform: uppercase; 
+            letter-spacing: 1.2px; 
+            border-bottom: 1px solid #eee; 
+        }
+
+        .task-row { 
+            display: grid; 
+            grid-template-columns: 40px 1.5fr 100px 1.2fr 120px; 
+            align-items: center; 
+            padding: 15px 30px; 
+            border-bottom: 1px solid #f9f9f9; 
+            gap: 20px; 
+            transition: background 0.2s; 
+        }
+        .task-row:hover { background: #fcfcfc; }
+
+        .check-col { cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        .task-info h4 { font-size: 12px; font-weight: 700; color: #222; margin-bottom: 4px; line-height: 1.4; }
+        .task-info span { font-size: 8px; font-weight: 800; text-transform: uppercase; background: #f2f2f2; padding: 2px 10px; border-radius: 12px; color: #777; letter-spacing: 0.5px; }
+        .week-col { display: flex; justify-content: center; }
+        .week-badge { background: rgba(94, 58, 153, 0.08); color: var(--med-violet); font-size: 9px; font-weight: 800; padding: 6px 10px; border-radius: 6px; white-space: nowrap; }
+
+        .note-col textarea { 
+            width: 100%; border: 1px solid #eee; border-radius: 10px; padding: 10px; 
+            font-size: 11px; font-family: 'Montserrat', sans-serif; resize: none; 
+            background: #fff; transition: border-color 0.3s; 
+        }
+        .note-col textarea:focus { border-color: var(--fuchsia); outline: none; }
+
+        .status-badge { display: block; width: 100%; padding: 8px; font-size: 8px; font-weight: 800; border-radius: 20px; text-transform: uppercase; border: 1px solid transparent; text-align: center; cursor: pointer; }
+        .status-badge.pendiente { background: #f5f5f5; color: #bbb; }
+        .status-badge.progreso { background: rgba(199, 60, 140, 0.1); color: var(--fuchsia); border-color: rgba(199, 60, 140, 0.2); }
+        .status-badge.completado { background: rgba(47, 164, 169, 0.1); color: var(--strong-turquoise); border-color: rgba(47, 164, 169, 0.2); }
+
+        /* FOOTER */
+        footer { background-color: var(--dark-violet); padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-left { color: white; font-size: 10px; font-weight: 700; text-transform: uppercase; display: flex; align-items: center; gap: 12px; letter-spacing: 1.5px; }
+        .pulse { width: 10px; height: 10px; background: var(--strong-turquoise); border-radius: 50%; animation: pulse-animation 2s infinite; }
+        @keyframes pulse-animation {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(47, 164, 169, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(47, 164, 169, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(47, 164, 169, 0); }
+        }
+
+        .btn { padding: 10px 22px; border-radius: 30px; font-size: 10px; font-weight: 800; text-transform: uppercase; cursor: pointer; border: none; display: flex; align-items: center; gap: 10px; transition: all 0.3s; }
+        .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; }
+        .btn-gradient { background: linear-gradient(90deg, var(--fuchsia), var(--strong-pink)); color: white; box-shadow: 0 4px 15px rgba(199, 60, 140, 0.4); }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        /* MINUTA VIEW */
+        .minuta-container { max-width: 850px; margin: 0 auto; }
+        .minuta-header { background: linear-gradient(135deg, var(--dark-violet), var(--med-violet)); padding: 35px; border-radius: 20px; color: white; margin-bottom: 30px; }
+        .minuta-card { background: white; border: 1px solid #eee; padding: 25px; border-radius: 16px; margin-bottom: 15px; border-left: 8px solid #ddd; }
+        .minuta-text { background: #fbfbfb; padding: 15px; border-radius: 12px; font-size: 12px; color: #444; font-style: italic; border: 1px solid #f0f0f0; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .task-grid-header { display: none; }
+            .task-row { grid-template-columns: 40px 1fr; gap: 10px; padding: 20px; }
+            .week-col, .note-col, .status-col { grid-column: 2; width: 100%; text-align: left; }
+            .week-badge { display: inline-block; }
+            header, footer { padding: 20px; justify-content: center; }
+            .brand-box { flex-direction: column; text-align: center; }
+            .divider { display: none; }
+            .header-actions { flex-direction: column; width: 100%; }
+            .btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-2">
-                    <span class="text-2xl font-black text-[#b18af1] tracking-tighter">Feedback</span>
-                    <span class="text-sm font-medium text-slate-500 border-l border-slate-300 pl-2">en Dosis Reales</span>
-                </div>
+<div class="container">
+    <header>
+        <div class="brand-box">
+            <div class="logo">FRÁVEGA</div>
+            <div class="divider"></div>
+            <div class="header-text">
+                <h1>Capacitación en Productos: Motos</h1>
+                <p>E-Learning</p>
             </div>
         </div>
-    </nav>
-
-    <header class="bg-[#b18af1] text-white py-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
-        <div class="max-w-4xl mx-auto relative z-10">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">Feedback entre generaciones</h1>
-            <p class="text-xl md:text-2xl font-light text-slate-300 max-w-3xl mx-auto">Adaptar el mensaje para transformar las diferencias en oportunidades de aprendizaje.</p>
+        <div class="header-actions">
+            <div class="mesa-tag">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                Mesa de Trabajo: Jueves
+            </div>
+            <button class="btn btn-gradient" onclick="saveVisualFeedback()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                Guardar Avance
+            </button>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+    <div class="metrics-grid" id="metrics"></div>
 
-        <section id="introduccion">
-            <div class="max-w-3xl mx-auto text-center">
-                <p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
-                    En Frávega convivimos personas con distintas experiencias y formas de trabajar. Esta aplicación interactiva permite explorar cómo dar y recibir feedback de manera efectiva según el perfil generacional y el recorrido en la compañía.
-                </p>
-                <div class="inline-flex items-center justify-center p-4 bg-orange-50 rounded-xl border border-orange-100">
-                    <span class="text-3xl mr-4">🎯</span>
-                    <p class="text-left text-sm font-medium text-orange-800">El objetivo es brindar herramientas para preparar intercambios de feedback donde el mensaje llegue y genere valor real.</p>
-                </div>
-            </div>
-        </section>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('dashboard')">Dashboard Semanal</button>
+        <button class="tab-btn" onclick="switchTab('bitacora')">Minuta de Acuerdos</button>
+    </div>
 
-        <section id="explorador-generacional">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold text-slate-800 mb-4">Explorador de Perfiles</h2>
-                <p class="text-slate-600 max-w-2xl mx-auto">Selecciona una generación para descubrir cómo adaptar tus conversaciones de feedback.</p>
-            </div>
+    <div class="content" id="main-content"></div>
 
-            <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
-                <div class="flex flex-wrap border-b border-slate-200" id="tab-container">
-                    <button class="tab-btn active flex-1 py-4 px-6 text-sm font-semibold" data-target="gen-z">Gen Z</button>
-                    <button class="tab-btn flex-1 py-4 px-6 text-sm font-semibold" data-target="millennials">Millennials</button>
-                    <button class="tab-btn flex-1 py-4 px-6 text-sm font-semibold" data-target="gen-x">Generación X</button>
-                    <button class="tab-btn flex-1 py-4 px-6 text-sm font-semibold" data-target="boomers">Baby Boomers</button>
-                </div>
-
-                <div class="p-8 md:p-12" id="content-container"></div>
-            </div>
-        </section>
-
-        <section id="analisis-valores" class="bg-white rounded-2xl shadow-md p-8 md:p-12 border border-slate-100">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-3xl font-bold text-slate-800 mb-6">Mapeo de Valores Laborales</h2>
-                    <p class="text-slate-600 mb-6 leading-relaxed">Visualización comparativa de las prioridades según cada generación. Este mapa ayuda a entender qué aspectos resuenan más al momento de liderar.</p>
-                    <div class="space-y-4">
-                        <div class="flex items-center p-3 bg-slate-50 rounded-lg">
-                            <span class="text-xl mr-3">💻</span>
-                            <span class="text-sm text-slate-700"><strong>Fluidez Digital:</strong> Dominio de herramientas colaborativas.</span>
-                        </div>
-                        <div class="flex items-center p-3 bg-slate-50 rounded-lg">
-                            <span class="text-xl mr-3">⚡</span>
-                            <span class="text-sm text-slate-700"><strong>Inmediatez:</strong> Expectativa de respuestas en tiempo real.</span>
-                        </div>
-                        <div class="flex items-center p-3 bg-slate-50 rounded-lg">
-                            <span class="text-xl mr-3">🏗️</span>
-                            <span class="text-sm text-slate-700"><strong>Estructura:</strong> Valoración de procesos y jerarquía.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <canvas id="radarChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <section id="impacto-recorrido">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold text-slate-800 mb-4">Impacto del Recorrido</h2>
-                <p class="text-slate-600 max-w-3xl mx-auto">La antigüedad define necesidades específicas que el feedback debe contemplar, independientemente de la edad.</p>
-            </div>
-
-            <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-5 space-y-6">
-                        <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-[#0284c7]">
-                            <h3 class="font-bold text-slate-800">El Experto (Trayectoria)</h3>
-                            <p class="text-sm text-slate-600 mt-2">Requiere reconocimiento a su visión y autonomía para proponer soluciones.</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-[#ea580c]">
-                            <h3 class="font-bold text-slate-800">El Ingresante (Nuevas Miradas)</h3>
-                            <p class="text-sm text-slate-600 mt-2">Necesita contexto operativo claro y validación frecuente en su etapa inicial.</p>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-7 chart-container">
-                        <canvas id="barChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-[#b18af1] text-slate-300 py-16 text-center border-t-4 border-[#0284c7]">
-        <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-2xl font-bold text-white mb-6">El poder de la conversación</h2>
-            <p class="text-lg mb-8">Al entender qué necesita cada persona para crecer, dejamos de hablar de generaciones y empezamos a hablar de <strong>mejores conversaciones</strong>.</p>
-            <p class="text-sm text-slate-400">Desarrollado para el equipo de Frávega</p>
+    <footer>
+        <div class="footer-left"><div class="pulse"></div>Programa de Formación Frávega</div>
+        <div class="footer-actions">
+            <button class="btn btn-outline" onclick="exportCSV()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Exportar Minuta
+            </button>
         </div>
     </footer>
+</div>
 
-    <script>
-        const formatLabel = (label) => {
-            if (label.length <= 16) return label;
-            const words = label.split(' ');
-            const lines = [];
-            let currentLine = words[0];
-            for (let i = 1; i < words.length; i++) {
-                if (currentLine.length + words[i].length + 1 <= 16) {
-                    currentLine += ' ' + words[i];
-                } else {
-                    lines.push(currentLine);
-                    currentLine = words[i];
-                }
-            }
-            lines.push(currentLine);
-            return lines;
-        };
-
-        const tooltipConfig = {
-            callbacks: {
-                title: function(items) {
-                    const item = items[0];
-                    let label = item.chart.data.labels[item.dataIndex];
-                    return Array.isArray(label) ? label.join(' ') : label;
-                }
-            }
-        };
-
-        const genData = {
-            'gen-z': {
-                title: 'Generación Z',
-                icon: '📱',
-                color: '#7e22ce',
-                description: 'Nativos digitales. Valoran la transparencia y el impacto social inmediato en sus tareas.',
-                traits: ['Inmediatez', 'Transparencia', 'Aprendizaje'],
-                feedbackValued: 'Respuestas rápidas y específicas. Prefieren saber el "qué mejorar" en tiempo real.',
-                feedbackHow: 'Uso de canales ágiles, ejemplos concretos y co-creación de soluciones.'
-            },
-            'millennials': {
-                title: 'Millennials',
-                icon: '🚀',
-                color: '#be185d',
-                description: 'Crecieron con la tecnología. Buscan propósito y desarrollo constante en sus roles.',
-                traits: ['Propósito', 'Flexibilidad', 'Desarrollo'],
-                feedbackValued: 'Instancias frecuentes que les ayuden a visualizar su crecimiento profesional.',
-                feedbackHow: 'Conversaciones uno a uno con foco en el desarrollo de carrera y metas claras.'
-            },
-            'gen-x': {
-                title: 'Generación X',
-                icon: '🎯',
-                color: '#ea580c',
-                description: 'Adaptables y autónomos. Valoran la eficiencia y el equilibrio entre vida y trabajo.',
-                traits: ['Autonomía', 'Eficiencia', 'Pragmatismo'],
-                feedbackValued: 'Honestidad directa y respeto por sus tiempos y métodos de trabajo.',
-                feedbackHow: 'Ir directo al punto, destacar resultados y dar espacio para la resolución independiente.'
-            },
-            'boomers': {
-                title: 'Baby Boomers',
-                icon: '🤝',
-                color: '#0d9488',
-                description: 'Valoran la experiencia, la estabilidad y la comunicación interpersonal cara a cara.',
-                traits: ['Experiencia', 'Lealtad', 'Estructura'],
-                feedbackValued: 'Reconocimiento explícito a su trayectoria y respeto por el aporte histórico.',
-                feedbackHow: 'Conversaciones presenciales, validando primero sus logros antes de plantear mejoras.'
-            }
-        };
-
-        const contentContainer = document.getElementById('content-container');
-        const tabBtns = document.querySelectorAll('.tab-btn');
-
-        function renderGenContent(genId) {
-            const data = genData[genId];
-            const traitsHtml = data.traits.map(t => `<span class="inline-block bg-slate-100 text-slate-700 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2 border border-slate-200">${t}</span>`).join('');
-
-            contentContainer.innerHTML = `
-                <div class="flex flex-col md:flex-row gap-8 animate-fade-in">
-                    <div class="md:w-1/3">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background-color: ${data.color}20; color: ${data.color};">${data.icon}</div>
-                            <h3 class="text-2xl font-bold text-slate-800">${data.title}</h3>
-                        </div>
-                        <p class="text-slate-600 mb-6 text-sm">${data.description}</p>
-                        <div class="mb-6">
-                            <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">ADN Laboral</h4>
-                            <div>${traitsHtml}</div>
-                        </div>
-                    </div>
-                    <div class="md:w-2/3 flex flex-col gap-4">
-                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-100 border-l-4" style="border-left-color: ${data.color}">
-                            <h4 class="font-bold text-slate-800 mb-2">Qué esperan del feedback</h4>
-                            <p class="text-sm text-slate-700">${data.feedbackValued}</p>
-                        </div>
-                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-100 border-l-4" style="border-left-color: ${data.color}">
-                            <h4 class="font-bold text-slate-800 mb-2">Sugerencia de abordaje</h4>
-                            <p class="text-sm text-slate-700">${data.feedbackHow}</p>
-                        </div>
-                    </div>
-                </div>`;
-            
-            tabBtns.forEach(btn => {
-                const isActive = btn.dataset.target === genId;
-                btn.classList.toggle('active', isActive);
-                if (isActive) {
-                    btn.style.backgroundColor = data.color;
-                    btn.style.borderColor = data.color;
-                    btn.style.color = 'white';
-                } else {
-                    btn.style.backgroundColor = 'transparent';
-                    btn.style.borderColor = 'transparent';
-                    btn.style.color = '#475569';
-                }
-            });
+<script>
+    // Configuración de Ejes y Tareas
+    const ejes = [
+        {
+            id: 'negocio',
+            title: 'EJE NEGOCIO Y CLIENTE',
+            color: '#4B2E83',
+            icon: 'Users',
+            tasks: [
+                { id: 'n1', name: 'Definir propósito: la esencia del producto, para qué vendemos motos y su link con categorías', type: 'Ingeniería', week: 'Sem 27/04' },
+                { id: 'n2', name: 'Hacer foco en la necesidad del cliente: que quede explícito', type: 'Ingeniería', week: 'Sem 27/04' },
+                { id: 'n3', name: 'PPT base: profundizar en slides del perfil del cliente y producto', type: 'Curaduría', week: 'Sem 04/05' },
+                { id: 'n4', name: 'Curar contenido disponible del eje y simplificar', type: 'Curaduría', week: 'Sem 04/05' },
+                { id: 'n5', name: 'Objeciones: ver referentes a este eje', type: 'Estrategia', week: 'Sem 11/05' },
+                { id: 'n6', name: 'Preguntas frecuentes y estructura core (mesa regionales)', type: 'Validación', week: 'Sem 11/05' },
+                { id: 'n7', name: 'ESTRUCTURACIÓN: Redacción del guion narrativo (Storyline) para la lección de apertura en Rise', type: 'Pedagogía', week: 'Sem 11/05' }
+            ]
+        },
+        {
+            id: 'producto',
+            title: 'EJE PRODUCTO Y VENTA',
+            color: '#C73C8C',
+            icon: 'FileSearch',
+            tasks: [
+                { id: 'p1', name: 'Profundizar según ppt base en relación moto perfil de cliente', type: 'Ingeniería', week: 'Sem 04/05' },
+                { id: 'p2', name: 'Criterios de recomendación', type: 'Ingeniería', week: 'Sem 11/05' },
+                { id: 'p3', name: 'Accesorios clave del producto', type: 'Cross-Sell', week: 'Sem 11/05' },
+                { id: 'p4', name: 'Condiciones de almacenamiento, stock y funcionamiento', type: 'Operativo', week: 'Sem 18/05' },
+                { id: 'p5', name: 'Buenas prácticas de capacitación según material proveedores', type: 'Benchmark', week: 'Sem 18/05' },
+                { id: 'p6', name: 'Preguntas frecuentes de este eje', type: 'Validación', week: 'Sem 18/05' },
+                { id: 'p7', name: 'DISEÑO: Estructuración de la matriz de comparativa de modelos para el bloque interactivo', type: 'Pedagogía', week: 'Sem 18/05' }
+            ]
+        },
+        {
+            id: 'operacion',
+            title: 'EJE OPERACIÓN Y PROCESOS',
+            color: '#2FA4A9',
+            icon: 'Settings',
+            tasks: [
+                { id: 'o1', name: 'completar flujo de sucursal actual y alternativas de formato', type: 'Ingeniería', week: 'Sem 18/05' },
+                { id: 'o2', name: 'instructivo simple del proceso de venta y registro (videos/ppt)', type: 'Producción', week: 'Sem 25/05' },
+                { id: 'o3', name: 'errores comunes: advertencias mesa 1 e identificar puntos críticos', type: 'Ingeniería', week: 'Sem 25/05' },
+                { id: 'o4', name: 'back office: material y formato (carpeta procesos) patentamiento y abastecimiento', type: 'Gobernanza', week: 'Jun S1' },
+                { id: 'o5', name: 'armar checklist de acondicionamiento de moto', type: 'Herramienta', week: 'Jun S1' },
+                { id: 'o6', name: 'Preguntas frecuentes de este eje', type: 'Validación', week: 'Jun S1' },
+                { id: 'o7', name: 'MAPEO: Creación del diagrama de procesos interactivo (guion visual del flujo sucursal)', type: 'Pedagogía', week: 'Jun S1' }
+            ]
+        },
+        {
+            id: 'produccion',
+            title: 'PRODUCCIÓN RISE & CAMPUS',
+            color: '#5E3A99',
+            icon: 'Layout',
+            tasks: [
+                { id: 'r1', name: 'ARQUITECTURA: Configuración del menú de navegación y estructura de lecciones en Rise', type: 'Setup', week: 'Sem 11/05' },
+                { id: 'r2', name: 'ADAPTACIÓN: Redacción instruccional de textos para lectura ágil y tonos corporativos', type: 'Design', week: 'Sem 18/05' },
+                { id: 'r3', name: 'MONTAJE: Carga de guiones, imágenes y videos por cada eje temático', type: 'Build', week: 'Sem 25/05' },
+                { id: 'r4', name: 'INTERACTIVIDAD: Configuración de bloques de escenario, acordeones y flashcards', type: 'Build', week: 'Sem 25/05' },
+                { id: 'r5', name: 'COMPLEMENTOS: Inserción de bloques transversales de Seguros y Accesorios', type: 'Integration', week: 'Jun S1' },
+                { id: 'r6', name: 'EVALUACIÓN: Diseño de quizzes interactivos con feedback pedagógico por módulo', type: 'Quiz', week: 'Jun S1' },
+                { id: 'r7', name: 'QA TÉCNICO: Pilotaje de funcionamiento y corrección ortotipográfica con Regionales', type: 'QA', week: 'Jun S2' },
+                { id: 'r8', name: 'DESPLIEGUE: Exportación SCORM y configuración de seguimiento en el LMS', type: 'LMS', week: 'Jun S2' }
+            ]
         }
+    ];
 
-        tabBtns.forEach(btn => btn.addEventListener('click', () => renderGenContent(btn.dataset.target)));
-        
-        window.onload = () => {
-            renderGenContent('gen-z');
-            
-            new Chart(document.getElementById('radarChart').getContext('2d'), {
-                type: 'radar',
-                data: {
-                    labels: ['Fluidez Digital', 'Valor Estructura', 'Búsqueda Propósito', 'Inmediatez', 'Autonomía'].map(formatLabel),
-                    datasets: [
-                        { label: 'Gen Z', data: [95, 30, 85, 95, 60], backgroundColor: 'rgba(126, 34, 206, 0.1)', borderColor: '#7e22ce', borderWidth: 2 },
-                        { label: 'Gen X', data: [65, 75, 60, 45, 95], backgroundColor: 'rgba(234, 88, 12, 0.1)', borderColor: '#ea580c', borderWidth: 2 }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { tooltip: tooltipConfig, legend: { position: 'bottom', labels: { usePointStyle: true, font: { size: 10 } } } },
-                    scales: { r: { grid: { color: '#f1f5f9' }, ticks: { display: false }, pointLabels: { font: { size: 10, weight: '600' } } } }
-                }
-            });
+    const STORAGE_KEY_STATUS = 'fravega_motos_status';
+    const STORAGE_KEY_COMMENTS = 'fravega_motos_comments';
 
-            new Chart(document.getElementById('barChart').getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: ['Necesidad de Contexto', 'Espacio para Preguntar', 'Grado de Autonomía', 'Aporte Estratégico'].map(formatLabel),
-                    datasets: [
-                        { label: 'Ingresante', data: [95, 90, 40, 45], backgroundColor: '#ea580c', borderRadius: 4 },
-                        { label: 'Experto', data: [25, 35, 95, 95], backgroundColor: '#0284c7', borderRadius: 4 }
-                    ]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { tooltip: tooltipConfig, legend: { position: 'top', labels: { usePointStyle: true, font: { size: 10 } } } },
-                    scales: { x: { display: false, max: 100 }, y: { grid: { display: false }, ticks: { font: { size: 11 } } } }
-                }
-            });
-        };
-    </script>
+    let currentTab = 'dashboard'; 
+    let expandedEje = 'negocio'; 
+    let taskStatus = JSON.parse(localStorage.getItem(STORAGE_KEY_STATUS)) || {}; 
+    let comments = JSON.parse(localStorage.getItem(STORAGE_KEY_COMMENTS)) || {};
+
+    const icons = {
+        Users: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>',
+        FileSearch: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><circle cx="11.5" cy="15.5" r="2.5"></circle></svg>',
+        Settings: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>',
+        Layout: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line></svg>',
+        Check: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+        Circle: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ddd" stroke-width="3"><circle cx="12" cy="12" r="10"></circle></svg>',
+        Clock: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>'
+    };
+
+    function renderMetrics() {
+        const metricsEl = document.getElementById('metrics');
+        metricsEl.innerHTML = ejes.map(eje => {
+            const progress = calculateProgress(eje.id);
+            const offset = 175.9 - (175.9 * progress / 100);
+            return `<div class="metric-card"><span class="metric-label">${eje.title}</span><div class="progress-circle"><svg><circle class="bg" cx="35" cy="35" r="28" /><circle class="val" cx="35" cy="35" r="28" stroke="${eje.color}" stroke-dasharray="175.9" stroke-dashoffset="${offset}" /></svg><span class="progress-text">${progress}%</span></div></div>`;
+        }).join('');
+    }
+
+    function calculateProgress(ejeId) {
+        const eje = ejes.find(e => e.id === ejeId);
+        let completed = 0; let inProgress = 0;
+        eje.tasks.forEach(t => { const s = taskStatus[t.id] || 'pendiente'; if (s === 'completado') completed++; if (s === 'progreso') inProgress++; });
+        return Math.round(((completed + inProgress * 0.5) / eje.tasks.length) * 100);
+    }
+
+    function switchTab(tab) { currentTab = tab; document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.textContent.toLowerCase().includes(tab.slice(0,3)))); renderContent(); }
+    function toggleEje(id) { expandedEje = expandedEje === id ? null : id; renderContent(); }
+    function toggleStatus(taskId) { const statuses = ['pendiente', 'progreso', 'completado']; const current = taskStatus[taskId] || 'pendiente'; taskStatus[taskId] = statuses[(statuses.indexOf(current) + 1) % statuses.length]; localStorage.setItem(STORAGE_KEY_STATUS, JSON.stringify(taskStatus)); renderMetrics(); renderContent(); }
+    function updateComment(taskId, value) { comments[taskId] = value; localStorage.setItem(STORAGE_KEY_COMMENTS, JSON.stringify(comments)); }
+    function saveVisualFeedback() { alert('Progreso guardado correctamente en este navegador.'); }
+
+    function renderContent() {
+        const contentEl = document.getElementById('main-content');
+        if (currentTab === 'dashboard') {
+            contentEl.innerHTML = ejes.map(eje => {
+                const isOpen = expandedEje === eje.id;
+                const progress = calculateProgress(eje.id);
+                return `<div class="eje-section"><button class="eje-header" style="${isOpen ? `background-color: ${eje.color}; color: white;` : ''}" onclick="toggleEje('${eje.id}')"><div class="eje-header-info"><div class="eje-icon" style="background: ${isOpen ? 'rgba(255,255,255,0.2)' : eje.color}">${icons[eje.icon]}</div><div class="eje-title"><h3>${eje.title}</h3><p>${progress}% de avance</p></div></div><span>${isOpen ? '▲' : '▼'}</span></button><div class="eje-body ${isOpen ? 'active' : ''}"><div class="task-grid-header"><div></div><div>Tarea</div><div style="text-align:center">Semana</div><div>Minuta</div><div style="text-align:center">Estado</div></div>${eje.tasks.map(task => {
+                    const status = taskStatus[task.id] || 'pendiente';
+                    const icon = status === 'completado' ? icons.Check : (status === 'progreso' ? icons.Clock : icons.Circle);
+                    const label = status === 'completado' ? 'Listo' : (status === 'progreso' ? 'Proceso' : 'Pendiente');
+                    return `<div class="task-row"><div class="check-col" onclick="toggleStatus('${task.id}')" style="color: ${status === 'completado' ? '#2FA4A9' : (status === 'progreso' ? '#C73C8C' : '#ddd')}">${icon}</div><div class="task-info"><h4>${task.name}</h4><span>${task.type}</span></div><div class="week-col"><span class="week-badge">${task.week}</span></div><div class="note-col"><textarea rows="1" placeholder="Acuerdo mesa..." oninput="updateComment('${task.id}', this.value)">${comments[task.id] || ''}</textarea></div><div class="status-col"><span class="status-badge ${status}" onclick="toggleStatus('${task.id}')">${label}</span></div></div>`;
+                }).join('')}</div></div>`;
+            }).join('');
+        } else {
+            const commentedTasks = ejes.flatMap(e => e.tasks.filter(t => comments[t.id]));
+            contentEl.innerHTML = `<div class="minuta-container"><div class="minuta-header"><h3>Acuerdos Registrados</h3><p>Legado técnico acumulado en las mesas de trabajo.</p></div>${commentedTasks.length > 0 ? ejes.map(eje => {
+                const tasksWithComments = eje.tasks.filter(t => comments[t.id]);
+                if (tasksWithComments.length === 0) return '';
+                return `<div><h4 style="font-size: 11px; margin-bottom:15px; color: ${eje.color}; text-transform: uppercase; letter-spacing:1px;">${eje.title}</h4>${tasksWithComments.map(task => `<div class="minuta-card" style="border-left-color: ${eje.color}"><div style="display:flex; justify-content:space-between; margin-bottom:10px;"><strong>${task.name}</strong><small>${task.week}</small></div><div class="minuta-text">"${comments[task.id]}"</div></div>`).join('')}</div>`;
+            }).join('') : `<p style="text-align:center; color:#999; padding: 50px;">No hay acuerdos registrados aún.</p>`}</div>`;
+        }
+    }
+
+    function exportCSV() {
+        let csvContent = "\uFEFFSemana,Eje,Tarea,Estado,Minuta\n";
+        ejes.forEach(eje => eje.tasks.forEach(task => { csvContent += `"${task.week}","${eje.title}","${task.name}","${taskStatus[task.id]||'Pendiente'}","${(comments[task.id]||'').replace(/"/g,'""')}"\n`; }));
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `Minuta_Motos_Fravega.csv`; link.click();
+    }
+    window.onload = () => { renderMetrics(); renderContent(); };
+</script>
 </body>
 </html>
