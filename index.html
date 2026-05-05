@@ -21,63 +21,63 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Montserrat', sans-serif; background-color: var(--light-grey); color: var(--black); line-height: 1.6; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--light-grey); color: var(--black); line-height: 1.6; overflow-x: hidden; }
+
+        /* MURO DE CONTRASEÑA */
+        #password-gate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--dark-violet);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 9999; transition: opacity 0.5s; color: white;
+        }
+        .gate-box {
+            background: white; padding: 40px; border-radius: 20px;
+            text-align: center; color: var(--black); width: 90%; max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .gate-box h2 { font-weight: 800; margin-bottom: 10px; color: var(--dark-violet); font-size: 18px; text-transform: uppercase; }
+        .gate-box input {
+            width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #eee;
+            margin-bottom: 20px; text-align: center; font-size: 16px; font-family: inherit;
+        }
+        .gate-box button {
+            width: 100%; padding: 15px; border-radius: 10px; border: none;
+            background: linear-gradient(90deg, var(--fuchsia), var(--strong-pink));
+            color: white; font-weight: 800; cursor: pointer; text-transform: uppercase;
+        }
 
         .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            background: var(--white);
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            overflow: hidden;
-            border: 1px solid #ddd;
+            max-width: 1200px; margin: 20px auto; background: var(--white);
+            border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            overflow: hidden; border: 1px solid #ddd; display: none; 
         }
 
         /* HEADER */
         header {
-            background-color: var(--dark-violet);
-            padding: 30px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            background-color: var(--dark-violet); padding: 30px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 20px;
         }
+        .header-text h1 { color: white; font-size: 20px; font-weight: 800; text-transform: uppercase; }
+        .header-text p { color: var(--soft-turquoise); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; }
 
-        .brand-box { display: flex; align-items: center; gap: 20px; }
-        .logo { background: white; color: var(--dark-violet); padding: 10px 24px; font-weight: 900; font-size: 22px; letter-spacing: -1px; border-radius: 6px; }
-        .divider { width: 1px; height: 40px; background: rgba(255,255,255,0.2); }
-        .header-text h1 { color: white; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-        .header-text p { color: var(--soft-turquoise); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; margin-top: 2px; }
+        .header-actions { display: flex; align-items: center; gap: 15px; }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        /* BOTONES */
+        .btn { padding: 12px 22px; border-radius: 30px; font-size: 10px; font-weight: 800; text-transform: uppercase; cursor: pointer; border: none; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
+        .btn-gradient { background: linear-gradient(90deg, var(--fuchsia), var(--strong-pink)); color: white; box-shadow: 0 4px 15px rgba(199, 60, 140, 0.4); }
+        .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
         .mesa-tag {
-            background: var(--med-violet);
-            padding: 12px 20px;
-            border-radius: 40px;
+            background: var(--med-violet); padding: 12px 20px; border-radius: 40px;
             border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            font-size: 10px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-transform: uppercase;
+            color: white; font-size: 10px; font-weight: 800; display: flex; align-items: center; gap: 10px; text-transform: uppercase;
         }
 
-        /* METRICS */
-        .metrics-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-            border-bottom: 1px solid #eee; 
-            background: white; 
-        }
-        .metric-card { padding: 25px; display: flex; flex-direction: column; align-items: center; border-right: 1px solid #eee; transition: all 0.3s; }
+        /* METRICS & TABS */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-bottom: 1px solid #eee; background: white; }
+        .metric-card { padding: 25px; display: flex; flex-direction: column; align-items: center; border-right: 1px solid #eee; }
         .metric-card:last-child { border-right: none; }
         .metric-label { font-size: 9px; font-weight: 900; color: #bbb; margin-bottom: 10px; letter-spacing: 1.5px; text-align: center; }
         .progress-circle { position: relative; width: 70px; height: 70px; }
@@ -87,81 +87,41 @@
         .progress-circle .val { stroke-linecap: round; transition: stroke-dashoffset 1s ease-out; }
         .progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 12px; font-weight: 800; }
 
-        /* TABS */
         .tabs { display: flex; border-bottom: 1px solid #eee; padding: 0 40px; background: white; }
-        .tab-btn { padding: 20px 30px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; border: none; background: none; cursor: pointer; color: #999; position: relative; transition: all 0.3s; }
+        .tab-btn { padding: 20px 30px; font-size: 10px; font-weight: 800; text-transform: uppercase; border: none; background: none; cursor: pointer; color: #999; position: relative; }
         .tab-btn.active { color: var(--fuchsia); }
         .tab-btn.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 4px; background: var(--fuchsia); }
 
-        /* CONTENT */
+        /* DASHBOARD CONTENT */
         .content { padding: 30px; min-height: 500px; }
         .eje-section { border: 1px solid #f0f0f0; border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
         .eje-header { width: 100%; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border: none; text-align: left; }
         .eje-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
-        .eje-title { flex: 1; margin-left: 20px; }
-        .eje-title h3 { font-size: 13px; font-weight: 800; letter-spacing: 0.5px; }
-        .eje-title p { font-size: 9px; opacity: 0.8; font-weight: 600; margin-top: 2px; }
-
         .eje-body { display: none; background: white; }
         .eje-body.active { display: block; }
 
         .task-grid-header { 
-            background: #fafafa; 
-            padding: 12px 30px; 
-            font-size: 9px; 
-            font-weight: 800; 
-            color: #aaa; 
-            display: grid; 
-            grid-template-columns: 40px 1.5fr 100px 1.2fr 120px; 
-            gap: 20px;
-            text-transform: uppercase; 
-            letter-spacing: 1.2px; 
-            border-bottom: 1px solid #eee; 
+            background: #fafafa; padding: 12px 30px; font-size: 9px; font-weight: 800; color: #aaa; 
+            display: grid; grid-template-columns: 40px 1.5fr 100px 1.2fr 120px; gap: 20px; text-transform: uppercase; 
         }
-
         .task-row { 
-            display: grid; 
-            grid-template-columns: 40px 1.5fr 100px 1.2fr 120px; 
-            align-items: center; 
-            padding: 15px 30px; 
-            border-bottom: 1px solid #f9f9f9; 
-            gap: 20px; 
-            transition: background 0.2s; 
+            display: grid; grid-template-columns: 40px 1.5fr 100px 1.2fr 120px; align-items: center; 
+            padding: 15px 30px; border-bottom: 1px solid #f9f9f9; gap: 20px; 
         }
-        .task-row:hover { background: #fcfcfc; }
-
-        .check-col { cursor: pointer; display: flex; justify-content: center; align-items: center; }
-        .task-info h4 { font-size: 12px; font-weight: 700; color: #222; margin-bottom: 4px; line-height: 1.4; }
-        .task-info span { font-size: 8px; font-weight: 800; text-transform: uppercase; background: #f2f2f2; padding: 2px 10px; border-radius: 12px; color: #777; letter-spacing: 0.5px; }
-        .week-col { display: flex; justify-content: center; }
-        .week-badge { background: rgba(94, 58, 153, 0.08); color: var(--med-violet); font-size: 9px; font-weight: 800; padding: 6px 10px; border-radius: 6px; white-space: nowrap; }
-
+        .task-info h4 { font-size: 12px; font-weight: 700; color: #222; margin-bottom: 4px; }
+        .week-badge { background: rgba(94, 58, 153, 0.08); color: var(--med-violet); font-size: 9px; font-weight: 800; padding: 6px 10px; border-radius: 6px; }
+        
         .note-col textarea { 
-            width: 100%; border: 1px solid #eee; border-radius: 10px; padding: 10px; 
-            font-size: 11px; font-family: 'Montserrat', sans-serif; resize: none; 
-            background: #fff; transition: border-color 0.3s; 
+            width: 100%; border: 1px solid #eee; border-radius: 10px; padding: 10px; font-size: 11px; 
+            font-family: inherit; resize: none; background: #fff; 
         }
-        .note-col textarea:focus { border-color: var(--fuchsia); outline: none; }
-
-        .status-badge { display: block; width: 100%; padding: 8px; font-size: 8px; font-weight: 800; border-radius: 20px; text-transform: uppercase; border: 1px solid transparent; text-align: center; cursor: pointer; }
+        .status-badge { display: block; width: 100%; padding: 8px; font-size: 8px; font-weight: 800; border-radius: 20px; text-transform: uppercase; text-align: center; cursor: pointer; }
         .status-badge.pendiente { background: #f5f5f5; color: #bbb; }
         .status-badge.progreso { background: rgba(199, 60, 140, 0.1); color: var(--fuchsia); border-color: rgba(199, 60, 140, 0.2); }
         .status-badge.completado { background: rgba(47, 164, 169, 0.1); color: var(--strong-turquoise); border-color: rgba(47, 164, 169, 0.2); }
 
-        /* FOOTER */
-        footer { background-color: var(--dark-violet); padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-        .footer-left { color: white; font-size: 10px; font-weight: 700; text-transform: uppercase; display: flex; align-items: center; gap: 12px; letter-spacing: 1.5px; }
-        .pulse { width: 10px; height: 10px; background: var(--strong-turquoise); border-radius: 50%; animation: pulse-animation 2s infinite; }
-        @keyframes pulse-animation {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(47, 164, 169, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(47, 164, 169, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(47, 164, 169, 0); }
-        }
-
-        .btn { padding: 10px 22px; border-radius: 30px; font-size: 10px; font-weight: 800; text-transform: uppercase; cursor: pointer; border: none; display: flex; align-items: center; gap: 10px; transition: all 0.3s; }
-        .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; }
-        .btn-gradient { background: linear-gradient(90deg, var(--fuchsia), var(--strong-pink)); color: white; box-shadow: 0 4px 15px rgba(199, 60, 140, 0.4); }
-        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        footer { background-color: var(--dark-violet); padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .footer-left { color: white; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
 
         /* MINUTA VIEW */
         .minuta-container { max-width: 850px; margin: 0 auto; }
@@ -169,27 +129,44 @@
         .minuta-card { background: white; border: 1px solid #eee; padding: 25px; border-radius: 16px; margin-bottom: 15px; border-left: 8px solid #ddd; }
         .minuta-text { background: #fbfbfb; padding: 15px; border-radius: 12px; font-size: 12px; color: #444; font-style: italic; border: 1px solid #f0f0f0; }
 
-        /* RESPONSIVE */
+        /* PRINT STYLES */
+        @media print {
+            body { background: white !important; }
+            #password-gate, .tabs, .header-actions, footer, .metrics-grid, .btn { display: none !important; }
+            .container { box-shadow: none !important; border: none !important; display: block !important; margin: 0 !important; max-width: 100% !important; }
+            #dashboard-view { display: none !important; }
+            #minuta-view { display: block !important; width: 100% !important; }
+            header { background: white !important; padding: 0 !important; color: black !important; border-bottom: 2px solid var(--dark-violet); margin-bottom: 20px; }
+            .header-text h1 { color: var(--dark-violet) !important; font-size: 24px !important; }
+            .header-text p { color: #666 !important; }
+            .minuta-card { break-inside: avoid; border: 1px solid #eee !important; border-left: 8px solid var(--dark-violet) !important; }
+        }
+
         @media (max-width: 900px) {
             .task-grid-header { display: none; }
             .task-row { grid-template-columns: 40px 1fr; gap: 10px; padding: 20px; }
-            .week-col, .note-col, .status-col { grid-column: 2; width: 100%; text-align: left; }
-            .week-badge { display: inline-block; }
-            header, footer { padding: 20px; justify-content: center; }
-            .brand-box { flex-direction: column; text-align: center; }
-            .divider { display: none; }
-            .header-actions { flex-direction: column; width: 100%; }
-            .btn { width: 100%; justify-content: center; }
+            .week-col, .note-col, .status-col { grid-column: 2; width: 100%; }
+            header { padding: 20px; text-align: center; }
+            .header-actions { width: 100%; flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<!-- Pantalla de Contraseña -->
+<div id="password-gate">
+    <div class="gate-box">
+        <h2 style="margin-bottom: 10px;">CAPACITACIÓN MOTOS</h2>
+        <p style="color: #666; font-size: 11px; margin-bottom: 20px; font-weight: 600;">INGRESO AL PROYECTO</p>
+        <input type="password" id="passInput" placeholder="Contraseña" onkeypress="if(event.keyCode==13) checkPass()">
+        <button onclick="checkPass()">Acceder al Dashboard</button>
+        <p id="error-msg" style="color: #C73C8C; font-size: 10px; margin-top: 15px; display: none; font-weight: 800;">CLAVE INCORRECTA</p>
+    </div>
+</div>
+
+<div class="container" id="app-container">
     <header>
         <div class="brand-box">
-            <div class="logo">FRÁVEGA</div>
-            <div class="divider"></div>
             <div class="header-text">
                 <h1>Capacitación en Productos: Motos</h1>
                 <p>E-Learning</p>
@@ -201,7 +178,7 @@
                 Mesa de Trabajo: Jueves
             </div>
             <button class="btn btn-gradient" onclick="saveVisualFeedback()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline></svg>
                 Guardar Avance
             </button>
         </div>
@@ -217,18 +194,33 @@
     <div class="content" id="main-content"></div>
 
     <footer>
-        <div class="footer-left"><div class="pulse"></div>Programa de Formación Frávega</div>
+        <div class="footer-left">Programa de Formación Frávega</div>
         <div class="footer-actions">
-            <button class="btn btn-outline" onclick="exportCSV()">
+            <button class="btn btn-outline" onclick="exportPDF()">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                Exportar Minuta
+                Exportar PDF
             </button>
         </div>
     </footer>
 </div>
 
 <script>
-    // Configuración de Ejes y Tareas
+    const ACCESS_PASSWORD = "fravemotos26";
+
+    function checkPass() {
+        const val = document.getElementById('passInput').value;
+        if (val === ACCESS_PASSWORD) {
+            document.getElementById('password-gate').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('password-gate').style.display = 'none';
+                document.getElementById('app-container').style.display = 'block';
+                init();
+            }, 500);
+        } else {
+            document.getElementById('error-msg').style.display = 'block';
+        }
+    }
+
     const ejes = [
         {
             id: 'negocio',
@@ -236,13 +228,13 @@
             color: '#4B2E83',
             icon: 'Users',
             tasks: [
-                { id: 'n1', name: 'Definir propósito: la esencia del producto, para qué vendemos motos y su link con categorías', type: 'Ingeniería', week: 'Sem 27/04' },
+                { id: 'n1', name: 'Definir propósito: la esencia del producto y su link con categorías', type: 'Ingeniería', week: 'Sem 27/04' },
                 { id: 'n2', name: 'Hacer foco en la necesidad del cliente: que quede explícito', type: 'Ingeniería', week: 'Sem 27/04' },
                 { id: 'n3', name: 'PPT base: profundizar en slides del perfil del cliente y producto', type: 'Curaduría', week: 'Sem 04/05' },
                 { id: 'n4', name: 'Curar contenido disponible del eje y simplificar', type: 'Curaduría', week: 'Sem 04/05' },
                 { id: 'n5', name: 'Objeciones: ver referentes a este eje', type: 'Estrategia', week: 'Sem 11/05' },
                 { id: 'n6', name: 'Preguntas frecuentes y estructura core (mesa regionales)', type: 'Validación', week: 'Sem 11/05' },
-                { id: 'n7', name: 'ESTRUCTURACIÓN: Redacción del guion narrativo (Storyline) para la lección de apertura en Rise', type: 'Pedagogía', week: 'Sem 11/05' }
+                { id: 'n7', name: 'ESTRUCTURACIÓN: Redacción del guion narrativo para apertura en Rise', type: 'Pedagogía', week: 'Sem 11/05' }
             ]
         },
         {
@@ -254,10 +246,10 @@
                 { id: 'p1', name: 'Profundizar según ppt base en relación moto perfil de cliente', type: 'Ingeniería', week: 'Sem 04/05' },
                 { id: 'p2', name: 'Criterios de recomendación', type: 'Ingeniería', week: 'Sem 11/05' },
                 { id: 'p3', name: 'Accesorios clave del producto', type: 'Cross-Sell', week: 'Sem 11/05' },
-                { id: 'p4', name: 'Condiciones de almacenamiento, stock y funcionamiento', type: 'Operativo', week: 'Sem 18/05' },
-                { id: 'p5', name: 'Buenas prácticas de capacitación según material proveedores', type: 'Benchmark', week: 'Sem 18/05' },
+                { id: 'p4', name: 'Condiciones de almacenamiento y stock', type: 'Operativo', week: 'Sem 18/05' },
+                { id: 'p5', name: 'Buenas prácticas según material proveedores', type: 'Benchmark', week: 'Sem 18/05' },
                 { id: 'p6', name: 'Preguntas frecuentes de este eje', type: 'Validación', week: 'Sem 18/05' },
-                { id: 'p7', name: 'DISEÑO: Estructuración de la matriz de comparativa de modelos para el bloque interactivo', type: 'Pedagogía', week: 'Sem 18/05' }
+                { id: 'p7', name: 'DISEÑO: Matriz de modelos para bloque interactivo', type: 'Pedagogía', week: 'Sem 18/05' }
             ]
         },
         {
@@ -266,13 +258,13 @@
             color: '#2FA4A9',
             icon: 'Settings',
             tasks: [
-                { id: 'o1', name: 'completar flujo de sucursal actual y alternativas de formato', type: 'Ingeniería', week: 'Sem 18/05' },
-                { id: 'o2', name: 'instructivo simple del proceso de venta y registro (videos/ppt)', type: 'Producción', week: 'Sem 25/05' },
-                { id: 'o3', name: 'errores comunes: advertencias mesa 1 e identificar puntos críticos', type: 'Ingeniería', week: 'Sem 25/05' },
-                { id: 'o4', name: 'back office: material y formato (carpeta procesos) patentamiento y abastecimiento', type: 'Gobernanza', week: 'Jun S1' },
+                { id: 'o1', name: 'completar flujo de sucursal actual', type: 'Ingeniería', week: 'Sem 18/05' },
+                { id: 'o2', name: 'instructivo simple del proceso de venta y registro', type: 'Producción', week: 'Sem 25/05' },
+                { id: 'o3', name: 'errores comunes y puntos críticos mesa 1', type: 'Ingeniería', week: 'Sem 25/05' },
+                { id: 'o4', name: 'back office: patentamiento y abastecimiento', type: 'Gobernanza', week: 'Jun S1' },
                 { id: 'o5', name: 'armar checklist de acondicionamiento de moto', type: 'Herramienta', week: 'Jun S1' },
                 { id: 'o6', name: 'Preguntas frecuentes de este eje', type: 'Validación', week: 'Jun S1' },
-                { id: 'o7', name: 'MAPEO: Creación del diagrama de procesos interactivo (guion visual del flujo sucursal)', type: 'Pedagogía', week: 'Jun S1' }
+                { id: 'o7', name: 'MAPEO: Diagrama de procesos interactivo para Rise', type: 'Pedagogía', week: 'Jun S1' }
             ]
         },
         {
@@ -281,88 +273,100 @@
             color: '#5E3A99',
             icon: 'Layout',
             tasks: [
-                { id: 'r1', name: 'ARQUITECTURA: Configuración del menú de navegación y estructura de lecciones en Rise', type: 'Setup', week: 'Sem 11/05' },
-                { id: 'r2', name: 'ADAPTACIÓN: Redacción instruccional de textos para lectura ágil y tonos corporativos', type: 'Design', week: 'Sem 18/05' },
-                { id: 'r3', name: 'MONTAJE: Carga de guiones, imágenes y videos por cada eje temático', type: 'Build', week: 'Sem 25/05' },
-                { id: 'r4', name: 'INTERACTIVIDAD: Configuración de bloques de escenario, acordeones y flashcards', type: 'Build', week: 'Sem 25/05' },
-                { id: 'r5', name: 'COMPLEMENTOS: Inserción de bloques transversales de Seguros y Accesorios', type: 'Integration', week: 'Jun S1' },
-                { id: 'r6', name: 'EVALUACIÓN: Diseño de quizzes interactivos con feedback pedagógico por módulo', type: 'Quiz', week: 'Jun S1' },
-                { id: 'r7', name: 'QA TÉCNICO: Pilotaje de funcionamiento y corrección ortotipográfica con Regionales', type: 'QA', week: 'Jun S2' },
-                { id: 'r8', name: 'DESPLIEGUE: Exportación SCORM y configuración de seguimiento en el LMS', type: 'LMS', week: 'Jun S2' }
+                { id: 'r1', name: 'ARQUITECTURA: Menú y estructura en Rise', type: 'Setup', week: 'Sem 11/05' },
+                { id: 'r2', name: 'ADAPTACIÓN: Redacción instruccional corporativa', type: 'Design', week: 'Sem 18/05' },
+                { id: 'r3', name: 'MONTAJE: Carga de guiones y multimedia', type: 'Build', week: 'Sem 25/05' },
+                { id: 'r4', name: 'INTERACTIVIDAD: Bloques interactivos', type: 'Build', week: 'Sem 25/05' },
+                { id: 'r5', name: 'COMPLEMENTOS: Bloques transversales Seguros/Accesorios', type: 'Integration', week: 'Jun S1' },
+                { id: 'r6', name: 'EVALUACIÓN: Quizzes pedagógicos', type: 'Quiz', week: 'Jun S1' },
+                { id: 'r7', name: 'QA TÉCNICO: Pilotaje con Regionales', type: 'QA', week: 'Jun S2' },
+                { id: 'r8', name: 'DESPLIEGUE: Exportación SCORM para LMS', type: 'LMS', week: 'Jun S2' }
             ]
         }
     ];
 
-    const STORAGE_KEY_STATUS = 'fravega_motos_status';
-    const STORAGE_KEY_COMMENTS = 'fravega_motos_comments';
-
     let currentTab = 'dashboard'; 
     let expandedEje = 'negocio'; 
-    let taskStatus = JSON.parse(localStorage.getItem(STORAGE_KEY_STATUS)) || {}; 
-    let comments = JSON.parse(localStorage.getItem(STORAGE_KEY_COMMENTS)) || {};
+    let taskStatus = JSON.parse(localStorage.getItem('fravega_status')) || {}; 
+    let comments = JSON.parse(localStorage.getItem('fravega_comments')) || {};
 
     const icons = {
         Users: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>',
-        FileSearch: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><circle cx="11.5" cy="15.5" r="2.5"></circle></svg>',
-        Settings: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>',
-        Layout: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line></svg>',
+        FileSearch: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>',
+        Settings: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle></svg>',
+        Layout: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>',
         Check: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>',
         Circle: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ddd" stroke-width="3"><circle cx="12" cy="12" r="10"></circle></svg>',
         Clock: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>'
     };
 
+    function init() { renderMetrics(); renderContent(); }
+    
     function renderMetrics() {
         const metricsEl = document.getElementById('metrics');
         metricsEl.innerHTML = ejes.map(eje => {
-            const progress = calculateProgress(eje.id);
-            const offset = 175.9 - (175.9 * progress / 100);
-            return `<div class="metric-card"><span class="metric-label">${eje.title}</span><div class="progress-circle"><svg><circle class="bg" cx="35" cy="35" r="28" /><circle class="val" cx="35" cy="35" r="28" stroke="${eje.color}" stroke-dasharray="175.9" stroke-dashoffset="${offset}" /></svg><span class="progress-text">${progress}%</span></div></div>`;
+            const p = calculateProgress(eje.id);
+            const off = 175.9 - (175.9 * p / 100);
+            return `<div class="metric-card"><span class="metric-label">${eje.title}</span><div class="progress-circle"><svg><circle class="bg" cx="35" cy="35" r="28" /><circle class="val" cx="35" cy="35" r="28" stroke="${eje.color}" stroke-dasharray="175.9" stroke-dashoffset="${off}" /></svg><span class="progress-text">${p}%</span></div></div>`;
         }).join('');
     }
 
     function calculateProgress(ejeId) {
         const eje = ejes.find(e => e.id === ejeId);
-        let completed = 0; let inProgress = 0;
-        eje.tasks.forEach(t => { const s = taskStatus[t.id] || 'pendiente'; if (s === 'completado') completed++; if (s === 'progreso') inProgress++; });
-        return Math.round(((completed + inProgress * 0.5) / eje.tasks.length) * 100);
+        let c = 0; let ip = 0;
+        eje.tasks.forEach(t => { const s = taskStatus[t.id] || 'pendiente'; if(s=='completado') c++; if(s=='progreso') ip++; });
+        return Math.round(((c + ip * 0.5) / eje.tasks.length) * 100);
     }
 
-    function switchTab(tab) { currentTab = tab; document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.textContent.toLowerCase().includes(tab.slice(0,3)))); renderContent(); }
+    function switchTab(t) { currentTab = t; document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase().includes(t.slice(0,3)))); renderContent(); }
     function toggleEje(id) { expandedEje = expandedEje === id ? null : id; renderContent(); }
-    function toggleStatus(taskId) { const statuses = ['pendiente', 'progreso', 'completado']; const current = taskStatus[taskId] || 'pendiente'; taskStatus[taskId] = statuses[(statuses.indexOf(current) + 1) % statuses.length]; localStorage.setItem(STORAGE_KEY_STATUS, JSON.stringify(taskStatus)); renderMetrics(); renderContent(); }
-    function updateComment(taskId, value) { comments[taskId] = value; localStorage.setItem(STORAGE_KEY_COMMENTS, JSON.stringify(comments)); }
+    
+    function toggleStatus(tid) { 
+        const s = ['pendiente', 'progreso', 'completado']; 
+        const c = taskStatus[tid] || 'pendiente'; 
+        taskStatus[tid] = s[(s.indexOf(c) + 1) % s.length]; 
+        localStorage.setItem('fravega_status', JSON.stringify(taskStatus)); 
+        renderMetrics(); renderContent(); 
+    }
+
+    function updateComment(tid, v) { 
+        comments[tid] = v; 
+        localStorage.setItem('fravega_comments', JSON.stringify(comments)); 
+    }
+
     function saveVisualFeedback() { alert('Progreso guardado correctamente en este navegador.'); }
 
     function renderContent() {
         const contentEl = document.getElementById('main-content');
         if (currentTab === 'dashboard') {
-            contentEl.innerHTML = ejes.map(eje => {
+            contentEl.innerHTML = `<div id="dashboard-view">${ejes.map(eje => {
                 const isOpen = expandedEje === eje.id;
-                const progress = calculateProgress(eje.id);
-                return `<div class="eje-section"><button class="eje-header" style="${isOpen ? `background-color: ${eje.color}; color: white;` : ''}" onclick="toggleEje('${eje.id}')"><div class="eje-header-info"><div class="eje-icon" style="background: ${isOpen ? 'rgba(255,255,255,0.2)' : eje.color}">${icons[eje.icon]}</div><div class="eje-title"><h3>${eje.title}</h3><p>${progress}% de avance</p></div></div><span>${isOpen ? '▲' : '▼'}</span></button><div class="eje-body ${isOpen ? 'active' : ''}"><div class="task-grid-header"><div></div><div>Tarea</div><div style="text-align:center">Semana</div><div>Minuta</div><div style="text-align:center">Estado</div></div>${eje.tasks.map(task => {
-                    const status = taskStatus[task.id] || 'pendiente';
-                    const icon = status === 'completado' ? icons.Check : (status === 'progreso' ? icons.Clock : icons.Circle);
-                    const label = status === 'completado' ? 'Listo' : (status === 'progreso' ? 'Proceso' : 'Pendiente');
-                    return `<div class="task-row"><div class="check-col" onclick="toggleStatus('${task.id}')" style="color: ${status === 'completado' ? '#2FA4A9' : (status === 'progreso' ? '#C73C8C' : '#ddd')}">${icon}</div><div class="task-info"><h4>${task.name}</h4><span>${task.type}</span></div><div class="week-col"><span class="week-badge">${task.week}</span></div><div class="note-col"><textarea rows="1" placeholder="Acuerdo mesa..." oninput="updateComment('${task.id}', this.value)">${comments[task.id] || ''}</textarea></div><div class="status-col"><span class="status-badge ${status}" onclick="toggleStatus('${task.id}')">${label}</span></div></div>`;
+                const p = calculateProgress(eje.id);
+                return `<div class="eje-section"><button class="eje-header" style="${isOpen ? `background-color:${eje.color}; color:white;` : ''}" onclick="toggleEje('${eje.id}')"><div class="eje-header-info"><div class="eje-icon" style="background:${isOpen?'rgba(255,255,255,0.2)':eje.color}">${icons[eje.icon]}</div><div class="eje-title"><h3>${eje.title}</h3><p>${p}% avance</p></div></div><span>${isOpen?'▲':'▼'}</span></button><div class="eje-body ${isOpen?'active':''}"><div class="task-grid-header"><div></div><div>Tarea</div><div style="text-align:center">Semana</div><div>Minuta</div><div style="text-align:center">Estado</div></div>${eje.tasks.map(t => {
+                    const s = taskStatus[t.id] || 'pendiente';
+                    const i = s=='completado'?icons.Check:(s=='progreso'?icons.Clock:icons.Circle);
+                    const l = s=='completado'?'Listo':(s=='progreso'?'Proceso':'Pendiente');
+                    return `<div class="task-row"><div class="check-col" onclick="toggleStatus('${t.id}')" style="color:${s=='completado'?'#2FA4A9':(s=='progreso'?'#C73C8C':'#ddd')}">${i}</div><div class="task-info"><h4>${t.name}</h4><span>${t.type}</span></div><div class="week-col"><span class="week-badge">${t.week}</span></div><div class="note-col"><textarea rows="1" oninput="updateComment('${t.id}', this.value)">${comments[t.id]||''}</textarea></div><div class="status-col"><span class="status-badge ${s}" onclick="toggleStatus('${t.id}')">${l}</span></div></div>`;
                 }).join('')}</div></div>`;
-            }).join('');
+            }).join('')}</div>`;
         } else {
-            const commentedTasks = ejes.flatMap(e => e.tasks.filter(t => comments[t.id]));
-            contentEl.innerHTML = `<div class="minuta-container"><div class="minuta-header"><h3>Acuerdos Registrados</h3><p>Legado técnico acumulado en las mesas de trabajo.</p></div>${commentedTasks.length > 0 ? ejes.map(eje => {
-                const tasksWithComments = eje.tasks.filter(t => comments[t.id]);
-                if (tasksWithComments.length === 0) return '';
-                return `<div><h4 style="font-size: 11px; margin-bottom:15px; color: ${eje.color}; text-transform: uppercase; letter-spacing:1px;">${eje.title}</h4>${tasksWithComments.map(task => `<div class="minuta-card" style="border-left-color: ${eje.color}"><div style="display:flex; justify-content:space-between; margin-bottom:10px;"><strong>${task.name}</strong><small>${task.week}</small></div><div class="minuta-text">"${comments[task.id]}"</div></div>`).join('')}</div>`;
-            }).join('') : `<p style="text-align:center; color:#999; padding: 50px;">No hay acuerdos registrados aún.</p>`}</div>`;
+            const ct = ejes.flatMap(e => e.tasks.filter(t => comments[t.id]));
+            contentEl.innerHTML = `<div id="minuta-view" class="minuta-container"><div class="minuta-header"><h3>Acuerdos Registrados</h3><p>Legado técnico acumulado en las mesas de trabajo.</p></div>${ct.length > 0 ? ejes.map(eje => {
+                const tc = eje.tasks.filter(t => comments[t.id]);
+                if (tc.length === 0) return '';
+                return `<div><h4 style="color:${eje.color}; margin-bottom:10px; text-transform:uppercase; font-size:11px;">${eje.title}</h4>${tc.map(t => `<div class="minuta-card" style="border-left-color:${eje.color}"><strong>${t.name}</strong><br><div class="minuta-text">"${comments[t.id]}"</div></div>`).join('')}</div>`;
+            }).join('') : '<p style="text-align:center; padding:50px; color:#999;">No hay acuerdos registrados aún.</p>'}</div>`;
         }
     }
 
-    function exportCSV() {
-        let csvContent = "\uFEFFSemana,Eje,Tarea,Estado,Minuta\n";
-        ejes.forEach(eje => eje.tasks.forEach(task => { csvContent += `"${task.week}","${eje.title}","${task.name}","${taskStatus[task.id]||'Pendiente'}","${(comments[task.id]||'').replace(/"/g,'""')}"\n`; }));
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `Minuta_Motos_Fravega.csv`; link.click();
+    function exportPDF() {
+        // Forzamos el cambio a la pestaña de minuta para que se renderice
+        switchTab('bitacora');
+        // Pequeño delay para asegurar el render antes de imprimir
+        setTimeout(() => {
+            window.print();
+        }, 500);
     }
-    window.onload = () => { renderMetrics(); renderContent(); };
 </script>
 </body>
 </html>
